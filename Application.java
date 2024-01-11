@@ -32,7 +32,9 @@ public class Application {
 
     // Write current state to the mouse
     public void Input() {
-        // Add listeners
+        // Add listeners: Mouse Motion, Key, Mouse Button, Scroll Wheel
+
+        // Mouse Motion Listener:
         renderer.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
@@ -43,25 +45,52 @@ public class Application {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    
+                    isRunning = false;
                 }
             }
         });
+        // Mouse Button Listener:
         renderer.addMouseListener(new MouseAdapter() {
+            // Mouse Button Down
             @Override
             public void mousePressed(MouseEvent e) {
+                // Update Current Position Stored in Mouse
+                mouse.UpdatePosition(e.getX(), e.getY());
                 
+                // Determine if Left or Right Mouse Button is Clicked
+                if (!mouse.GetLeftButtonDown() && e.getButton()==1) {
+                    mouse.SetLeftMouseButton(true);
+                }
+
+                if(!mouse.GetLeftButtonDown() && e.getButton()==2) {
+                    mouse.SetRightMouseButton(true);
+                }
             }
-            
+            // Mouse Button Up
             @Override
             public void mouseReleased(MouseEvent e) {
+                // Determine if Left or Right Mouse Button is Released
+                if (mouse.GetLeftButtonDown() && e.getButton()==1) {
+                    mouse.SetLeftMouseButton(false);
+                }
 
+                if(mouse.GetLeftButtonDown() && e.getButton()==2) {
+                    mouse.SetRightMouseButton(false);
+                }
             }
         });
+        // Scroll Wheel Listener:
         renderer.addMouseWheelListener(new MouseWheelListener() {
             @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
-                
+                // Scroll Wheel Up/Away from User
+                if (e.getWheelRotation() < 0) {
+                    mouse.IncreaseCursorSize(10);
+                }
+                // Scroll Wheel Down/Away from User
+                if (e.getWheelRotation() > 0) {
+                    mouse.IncreaseCursorSize(-10);
+                }
             }
         });
     }
@@ -69,10 +98,15 @@ public class Application {
     public void Render() {
     }
 
+    // Take info from Mouse State -> Update Cloth -> Update Point -> Read and Use State
     public void Update() {
+        int currentTime = 0; // Implement method to get current time
+        double deltaTime = (currentTime - lastUpdateTime) / 1000.0;
+
+        cloth.Update(renderer, mouse, deltaTime);
+
+        lastUpdateTime = currentTime;
     }
-
-
 
     public void Destroy() {
     }

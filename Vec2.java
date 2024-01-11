@@ -23,25 +23,30 @@ public class Vec2 {
     }
 
     // "Overload" Math Operators for vector addition/subtraction/multiplication/division
-    public void add(Vec2 v) {
+    public Vec2 add(Vec2 v) {
         this.x += v.x;
         this.y += v.y;
+        return this;
     }
-    public void sub(Vec2 v) {
+    public Vec2 sub(Vec2 v) {
         this.x -= v.x;
         this.y -= v.y;
+        return this;
     }
-    public void mult(Vec2 v) {
+    public Vec2 mult(Vec2 v) {
         this.x *= v.x;
         this.y *= v.y;
+        return this;
     }
-    public void div(Vec2 v) {
+    public Vec2 div(Vec2 v) {
         this.x /= v.x;
         this.y /= v.y;
+        return this;
     }
 
-    public void scale(double s) {
+    public Vec2 scale(double s) {
         scale(s, s);
+        return this;
     }
     
     public void scale(double sx, double sy) {

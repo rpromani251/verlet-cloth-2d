@@ -43,7 +43,32 @@ public class Point {
     }
 
     public void Update(double deltaTime, float drag, Vec2 acceleration, float elasticity, Mouse mouse, int windowWidth, int windowHeight) {
-        
+        // Find cursorToPosDir
+        Vec2 cursorToPosDir = this.pos.sub(mouse.GetPosition());
+
+        double cursorToPosDist = cursorToPosDir.x * cursorToPosDir.x + cursorToPosDir.y * cursorToPosDir.y;
+        double cursorSize = mouse.GetCursorSize();
+        isSelected = cursorToPosDist < cursorSize * cursorSize;
+
+        // For every stick, set them to either be selected or not selected
+        for (Stick stick : sticks) {
+            if (stick != null) {
+                stick.SetIsSelected(isSelected);
+            }
+        }
+
+        // Handle when LeftButtonDown and Stick isSelected
+        if (mouse.GetLeftButtonDown() && isSelected) {
+            Vec2 difference = mouse.GetPosition().sub(mouse.GetPreviousPosition());
+
+            if (difference.x > elasticity) difference.x = elasticity;
+            if (difference.y > elasticity) difference.y = elasticity;
+            if (difference.x < -elasticity) difference.x = -elasticity;
+            if (difference.y < -elasticity) difference.y = -elasticity;
+            
+            prevPos = pos.sub(difference);
+        }
+
     }
 
     
