@@ -1,3 +1,5 @@
+import java.awt.event.*;
+
 public class Application {
 
     private Renderer renderer;
@@ -24,11 +26,44 @@ public class Application {
         int startY = (int) (renderer.GetWindowHeight() * 0.1); // Vertically, 10% from the top
 
         cloth = new Cloth(clothWidth, clothHeight, clothSpacing, startX, startY);
+
+        lastUpdateTime = 0;
     }
 
     // Write current state to the mouse
     public void Input() {
+        // Add listeners
+        renderer.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
 
+            }
+        });
+        renderer.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    
+                }
+            }
+        });
+        renderer.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                
+            }
+            
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+        });
+        renderer.addMouseWheelListener(new MouseWheelListener() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+                
+            }
+        });
     }
 
     public void Render() {

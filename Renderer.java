@@ -1,6 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Line2D;
+import java.awt.event.*;
 
 public class Renderer extends JFrame {
     private int windowWidth, windowHeight;
@@ -51,4 +51,23 @@ public class Renderer extends JFrame {
     public int GetWindowWidth() {
         return this.windowWidth;
     }
+
+    // Event Listeners:
+    public void addMouseMotionListener(MouseMotionListener listener) {
+        panel.addMouseMotionListener(listener);
+    }
+
+    public void addKeyListener(KeyListener listener) {
+        panel.addKeyListener(listener);
+        panel.setFocusable(true); // Required for receiving key events
+    }
+
+    public void addMouseListener(MouseListener listener) {
+        panel.addMouseListener(listener);
+    }
+
+    public void addMouseWheelListener(MouseWheelListener listener) {
+        panel.addMouseWheelListener(listener);
+    }
 }
+
